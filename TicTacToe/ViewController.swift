@@ -46,31 +46,11 @@ class ViewController: UIViewController {
         listOfButtons.append(c3)
         // Do any additional setup after loading the view.
     }
-
-    private func checkResetBoard() -> Bool {
-        for button in listOfButtons {
-            if button.title(for: .normal) == nil {
-                return false
-            }
-        }
-        return true
-    }
-    
-    private func resetBoard() {
-        for button in listOfButtons {
-            button.setTitle(nil, for: .normal)
-            button.isEnabled = true
-        }
-    }
-    
-    private func showEndGameAlert(_ test: String) {
-        
-    }
     
     @IBAction private func tapOnBoard(_ sender: UIButton) {
         addOnBoard(sender)
         if checkResetBoard() {
-            resetBoard()
+            showEndGameAlert("Game Ended!")
         }
     }
     
@@ -96,4 +76,33 @@ class ViewController: UIViewController {
         item.setTitle(title, for: .normal)
     }
     
+    private func checkResetBoard() -> Bool {
+        for button in listOfButtons {
+            if button.title(for: .normal) == nil {
+                return false
+            }
+        }
+        return true
+    }
+    
+    private func resetBoard() {
+        for button in listOfButtons {
+            button.setTitle(nil, for: .normal)
+            button.isEnabled = true
+        }
+        resetTurn()
+    }
+    
+    private func showEndGameAlert(_ text: String) {
+        let alert = UIAlertController(title: text, message: "Player ... won!", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Start a new match", style: .default, handler: {
+            (_) in self.resetBoard()
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    fileprivate func resetTurn() {
+        currentTurn = firstTurn
+        turnLabel.text = Cross
+    }
 }
