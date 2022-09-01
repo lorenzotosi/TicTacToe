@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     @IBAction private func tapOnBoard(_ sender: UIButton) {
         addOnBoard(sender)
         if checkResetBoard() {
-            showEndGameAlert("Game Ended!")
+            showEndGameAlert("Game Ended!", "It's a Draw!")
         }
     }
     
@@ -93,16 +93,18 @@ class ViewController: UIViewController {
         resetTurn()
     }
     
-    private func showEndGameAlert(_ text: String) {
-        let alert = UIAlertController(title: text, message: "Player ... won!", preferredStyle: .actionSheet)
+    private func showEndGameAlert(_ text: String, _ msg: String) {
+        let alert = UIAlertController(title: text, message: msg, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Start a new match", style: .default, handler: {
             (_) in self.resetBoard()
         }))
         self.present(alert, animated: true)
     }
     
-    fileprivate func resetTurn() {
+    private func resetTurn() {
         currentTurn = firstTurn
         turnLabel.text = Cross
     }
+    
+    
 }
